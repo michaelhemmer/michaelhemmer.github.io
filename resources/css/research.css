@@ -49,3 +49,6 @@
   font-size: 0.95rem;
   color: var(--paper);
 }
+@media (max-width: 700px){
+  .project-grid{ grid-template-columns: 1fr; }
+}
