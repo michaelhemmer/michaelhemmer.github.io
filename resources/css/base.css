@@ -1,0 +1,142 @@
+/* ============================================================
+   BASE — design tokens + shared layout (header, nav, footer)
+   Loaded on every page, before the page-specific stylesheet.
+   ============================================================ */
+
+:root{
+  /* Color: deep-lab navy, with the magenta/cyan pulled straight
+     from the mounted-crystal photos in the group's own lab. */
+  --ink:        #0b1220;
+  --ink-rgb:    11, 18, 32;      /* NEW — lets rgba() reuse --ink with transparency */
+  --panel:      #101a2e;
+  --surface-2:  #12294a;         /* NEW — third gradient stop, was hardcoded before */
+  --panel-line: #24314c;
+  --paper:      #edf1f7;
+  --muted:      #93a0b8;
+  --accent:     #e63e76;
+  --accent-rgb: 230, 62, 118;    /* NEW — lets rgba() reuse --accent with transparency */
+  --accent-2:   #4fd8e0;
+  --accent-soft: rgba(var(--accent-rgb), 0.14);   /* now derived, not a separate copy */
+
+  /* Type */
+  --font-display: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+  --font-body:    "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --font-mono:    "IBM Plex Mono", "Courier New", monospace;
+
+  --max-width: 1180px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+}
+img{ max-width: 100%; display: block; }
+a{ color: inherit; }
+h1, h2, h3{
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+p{ margin: 0 0 1rem; }
+
+/* ---------- header / nav (shared across every page) ---------- */
+
+.site-header{
+  background-image: linear-gradient(180deg,rgba(var(--ink-rgb), 0.55) 0%, rgba(var(--ink-rgb), 0.75) 100%),
+                     url("../images/bckgnd_header.png");
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--panel-line);
+}
+.site-header__inner{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.6rem 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.brand{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand em{
+  font-style: normal;
+  color: var(--accent);
+}
+nav ul{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+}
+nav a{
+  display: inline-block;
+  text-decoration: none;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+nav a:hover,
+nav a:focus-visible{
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  outline: none;
+}
+nav a[aria-current="page"]{
+  color: var(--accent-2);
+}
+
+/* small reusable signature: a two-tone gradient rule,
+   standing in for the beam line running through the lab photos */
+.rule{
+  height: 2px;
+  width: 56px;
+  border: 0;
+  margin: 1.1rem 0 1.6rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+main{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3.5rem 5vw 5rem;
+}
+
+/* ---------- footer (shared) ---------- */
+
+.site-footer{
+  border-top: 1px solid var(--panel-line);
+  padding: 1.75rem 5vw;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+/* ---------- focus visibility (accessibility floor) ---------- */
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}

@@ -1,0 +1,51 @@
+/* ============================================================
+   RESEARCH — project card grid
+   ============================================================ */
+
+.page-heading p{
+  max-width: 60ch;
+  color: var(--muted);
+}
+
+.project-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+.project-card{
+  border: 1px solid var(--panel-line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--panel);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.project-card:hover,
+.project-card:focus-visible{
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 28px -14px rgba(var(--accent-rgb), 0.45);
+}
+.project-card img{  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+.project-card__eyebrow{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  padding: 1.1rem 1.25rem 0;
+  display: block;
+}
+.project-card__caption{
+  padding: 0.5rem 1.25rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--paper);
+}

@@ -1,0 +1,41 @@
+/* ============================================================
+   PUBLICATIONS — chronological list, grouped by year
+   ============================================================ */
+
+.page-heading p{
+  max-width: 60ch;
+  color: var(--muted);
+}
+
+.pub-year{
+  margin-top: 2.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--panel-line);
+}
+.pub-year:first-of-type{
+  margin-top: 2.5rem;
+}
+.pub-year h2{
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
+  font-weight: 600;
+}
+.pub-list{
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+}
+.pub-list li{
+  padding: 0.65rem 0;
+  font-size: 0.96rem;
+  color: var(--paper);
+}
+.pub-list li + li{
+  border-top: 1px dashed var(--panel-line);
+}
+.pub-list i{
+  color: var(--muted);
+  font-style: italic;
+}

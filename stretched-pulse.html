@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stretched Pulse Calculator | Michaël Hemmer, PhD</title>
+    <meta name="description" content="Calculate the stretched duration of a Gaussian pulse from GDD, spectral width and central wavelength, and convert GDD in fs² to dispersion in ps/nm.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="resources/css/base.css">
+    <link rel="stylesheet" href="resources/css/tools.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="brand" href="index.html">Michaël Hemmer<em>.</em></a>
+            <nav aria-label="Primary">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="aboutme.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="stretched-pulse.html" aria-current="page">Tools</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <h1>Stretched pulse calculator</h1>
+            <hr class="rule">
+            <p>Stretched duration of a transform-limited Gaussian pulse for a given GDD, plus a converter between GDD (fs²) and dispersion (ps/nm).</p>
+        </div>
+
+        <div class="tool-grid">
+
+            <!-- ============ Calculator ============ -->
+            <section class="tool-card">
+                <h2>Pulse stretching</h2>
+
+                <div class="field">
+                    <label for="lam">Central wavelength λ₀</label>
+                    <div class="field__row">
+                        <input id="lam" type="number" value="1030" min="1" step="any">
+                        <span class="unit">nm</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="dlam">Spectral width Δλ (intensity FWHM)</label>
+                    <div class="field__row">
+                        <input id="dlam" type="number" value="10" min="0" step="any">
+                        <span class="unit">nm</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="gdd">Group delay dispersion (GDD)</label>
+                    <div class="field__row">
+                        <input id="gdd" type="number" value="1" step="any">
+                        <select id="gddUnit" aria-label="GDD unit">
+                            <option value="1">fs²</option>
+                            <option value="1e3">10³ fs²</option>
+                            <option value="1e6" selected>10⁶ fs² (ps²)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <dl class="results">
+                    <div><dt>Transform-limited duration τ₀</dt><dd id="outTau0">–</dd></div>
+                    <div><dt>Stretched duration τ (exact)</dt><dd id="outTau" class="hl">–</dd></div>
+                    <div><dt>Stretched duration (large-stretch approx.)</dt><dd id="outTauApprox">–</dd></div>
+                    <div><dt>Stretch factor τ / τ₀</dt><dd id="outFactor">–</dd></div>
+                </dl>
+            </section>
+
+            <!-- ============ Converter ============ -->
+            <section class="tool-card">
+                <h2>GDD ↔ ps/nm converter</h2>
+
+                <div class="field">
+                    <label for="lam2">Central wavelength λ₀</label>
+                    <div class="field__row">
+                        <input id="lam2" type="number" value="1030" min="1" step="any">
+                        <span class="unit">nm</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="cGdd">GDD</label>
+                    <div class="field__row">
+                        <input id="cGdd" type="number" step="any" value="1000000">
+                        <span class="unit">fs²</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="cD">Dispersion D = dτ/dλ</label>
+                    <div class="field__row">
+                        <input id="cD" type="number" step="any">
+                        <span class="unit">ps/nm</span>
+                    </div>
+                </div>
+
+                <p class="note">Edit either box and the other updates. Sign convention: D = −2πc·GDD / λ₀², so positive GDD (normal dispersion, red leads blue) gives negative ps/nm. The magnitude is what sets the stretched duration.</p>
+            </section>
+        </div>
+
+        <section class="formulas">
+            <h2>Formulas and assumptions</h2>
+            <p class="formula">τ₀ = 2 ln2 · λ₀² / (π c Δλ) ≈ 0.441 λ₀² / (c Δλ)</p>
+            <p class="formula">τ = τ₀ · √( 1 + (4 ln2 · GDD / τ₀²)² )</p>
+            <p class="formula">τ ≈ |GDD| · 2π c Δλ / λ₀² &nbsp;&nbsp;(τ ≫ τ₀)</p>
+            <p class="formula">D = dτ/dλ = −2π c · GDD / λ₀²</p>
+            <ul>
+                <li>The input pulse is transform-limited with a Gaussian spectrum (time-bandwidth product 0.441).</li>
+                <li>Δλ and all durations are intensity FWHM. Mixing in amplitude or 1/e² widths causes factor-of-√2 and ln2 errors.</li>
+                <li>Only second-order dispersion is included. Third and higher orders, and nonlinear effects such as SPM, are ignored.</li>
+                <li>The ps/nm conversion is evaluated at the central wavelength and assumes GDD is constant across the bandwidth.</li>
+                <li>Constants: c = 299.792458 nm/fs.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Michaël Hemmer. All rights reserved.</p>
+    </footer>
+
+    <script>
+    /* ============================================================
+       Constants and helpers
+       ============================================================ */
+    const C = 299.792458;              // speed of light in nm/fs
+    const TBP = 2 * Math.LN2 / Math.PI; // 0.4413, Gaussian time-bandwidth product
+    const $ = (id) => document.getElementById(id);
+
+    // Format a duration given in fs with a sensible unit
+    function fmtTime(fs) {
+        if (!isFinite(fs)) return "–";
+        const a = Math.abs(fs);
+        if (a >= 1e6) return (fs / 1e6).toPrecision(4) + " ns";
+        if (a >= 1e3) return (fs / 1e3).toPrecision(4) + " ps";
+        return fs.toPrecision(4) + " fs";
+    }
+
+    /* ============================================================
+       Calculator: tau0 and stretched tau
+       ============================================================ */
+    function updateCalc() {
+        const lam  = parseFloat($("lam").value);
+        const dlam = parseFloat($("dlam").value);
+        const gdd  = parseFloat($("gdd").value) * parseFloat($("gddUnit").value); // fs²
+
+        if (!(lam > 0) || !(dlam > 0) || isNaN(gdd)) {
+            ["outTau0", "outTau", "outTauApprox", "outFactor"].forEach(id => $(id).textContent = "–");
+            return;
+        }
+
+        const tau0 = TBP * lam * lam / (C * dlam);                        // fs
+        const tau  = tau0 * Math.sqrt(1 + Math.pow(4 * Math.LN2 * gdd / (tau0 * tau0), 2));
+        const approx = Math.abs(gdd) * 2 * Math.PI * C * dlam / (lam * lam);
+
+        $("outTau0").textContent = fmtTime(tau0);
+        $("outTau").textContent = fmtTime(tau);
+        $("outTauApprox").textContent = fmtTime(approx);
+        $("outFactor").textContent = (tau / tau0).toPrecision(4);
+    }
+
+    /* ============================================================
+       Converter: GDD (fs²) <-> D (ps/nm)
+       D [fs/nm] = -2*pi*c*GDD / lambda²   ->  divide by 1000 for ps/nm
+       ============================================================ */
+    const factor = (lam) => -2 * Math.PI * C / (lam * lam) / 1000; // ps/nm per fs²
+
+    function gddToD() {
+        const lam = parseFloat($("lam2").value);
+        const gdd = parseFloat($("cGdd").value);
+        $("cD").value = (lam > 0 && !isNaN(gdd)) ? (gdd * factor(lam)).toPrecision(6) : "";
+    }
+    function dToGdd() {
+        const lam = parseFloat($("lam2").value);
+        const d = parseFloat($("cD").value);
+        $("cGdd").value = (lam > 0 && !isNaN(d)) ? (d / factor(lam)).toPrecision(6) : "";
+    }
+
+    /* ============================================================
+       Wire everything up
+       ============================================================ */
+    ["lam", "dlam", "gdd"].forEach(id => $(id).addEventListener("input", updateCalc));
+    $("gddUnit").addEventListener("change", updateCalc);
+
+    $("cGdd").addEventListener("input", gddToD);
+    $("cD").addEventListener("input", dToGdd);
+    $("lam2").addEventListener("input", gddToD);
+
+    // Keep the two wavelength fields in sync
+    $("lam").addEventListener("input", () => { $("lam2").value = $("lam").value; gddToD(); });
+    $("lam2").addEventListener("input", () => { $("lam").value = $("lam2").value; updateCalc(); });
+
+    updateCalc();
+    gddToD();
+    </script>
+    <noscript><p style="text-align:center">This calculator needs JavaScript.</p></noscript>
+
+</body>
+</html>

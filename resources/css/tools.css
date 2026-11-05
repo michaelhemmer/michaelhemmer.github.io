@@ -1,0 +1,133 @@
+/* ============================================================
+   TOOLS — calculator cards, inputs, results
+   ============================================================ */
+
+.page-heading p{
+  max-width: 60ch;
+  color: var(--muted);
+}
+
+.tool-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+  align-items: start;
+}
+.tool-card{
+  border: 1px solid var(--panel-line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+.tool-card h2{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 1.25rem;
+}
+
+.field{ margin-bottom: 1.1rem; }
+.field label{
+  display: block;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+.field__row{
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.field input,
+.field select{
+  flex: 1;
+  min-width: 0;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--panel-line);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+.field select{ flex: 0 0 auto; }
+.field input:focus,
+.field select:focus{
+  outline: 2px solid var(--accent-2);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.unit{
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-2);
+  min-width: 3.2rem;
+}
+
+.results{
+  margin: 1.5rem 0 0;
+  border-top: 1px dashed var(--panel-line);
+}
+.results div{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--panel-line);
+}
+.results dt{
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.results dd{
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.results dd.hl{
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.note{
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 1.25rem;
+}
+
+.formulas{
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--panel-line);
+}
+.formulas h2{
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
+}
+.formula{
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  overflow-x: auto;
+}
+.formulas ul{
+  color: var(--paper);
+  font-size: 0.96rem;
+  padding-left: 1.2rem;
+}
+.formulas li{ margin-bottom: 0.4rem; }
+
+@media (max-width: 800px){
+  .tool-grid{ grid-template-columns: 1fr; }
+}
