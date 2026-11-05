@@ -73,7 +73,8 @@ p{ margin: 0 0 1rem; }
   text-decoration: none;
   white-space: nowrap;
 }
-.brand em{
+.brand em,
+h1 em{
   font-style: normal;
   color: var(--accent);
 }
